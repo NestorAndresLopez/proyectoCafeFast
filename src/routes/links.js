@@ -14,6 +14,7 @@ router.post('/add', async(req, res)=> {
         description
     };
     await pool.query('INSERT INTO clients set ?',[newLink]);
+    req.flash('success', 'Cliente Creado')
     res.redirect('/links')
 });
 
@@ -25,13 +26,14 @@ router.get('/', async(req, res)=>{
 router.get('/delete/:id', async(req, res)=>{
     const {id} = req.params;
     await pool.query('DELETE FROM clients WHERE ID = ?',[id] );
+    req.flash('success', 'Cliente Eliminado');
     res.redirect('/links');
 } ) 
 
 router.get('/edit/:id', async(req, res)=>{
     const {id} = req.params;
     const links = await pool.query('SELECT * FROM clients WHERE id = ?', [id]);
-    res.render('links/edit', {links: links[0]});
+    res.render('links/edit', {link: links[0]});
 })
 
 router.post('/edit/:id', async(req, res) =>{
@@ -42,7 +44,7 @@ router.post('/edit/:id', async(req, res) =>{
         description
     };
     await pool.query('UPDATE clients set ? WHERE id = ?', [newLink, id]);
-    console.log(newLink);
+    req.flash('success', 'Cliente Actualizado');
     res.redirect('/links');
 } );
 

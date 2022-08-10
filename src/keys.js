@@ -1,6 +1,6 @@
 module.exports= {
     database:{
-        host: 'localhost',
+    host: 'localhost',
     user: 'root',
     password: 'admin',
     database: 'proyectocafefast'
